@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- <bean id="user" class="com.spring.vo.User"></bean> --> 
+	<bean id="userDao" class="com.spring.dao.UserDao"></bean>
+	<!-- 属性需要提供get／set方法 -->
+	<bean id="userController" class="com.spring.contoller.UserController">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean id="joinPointTest" class="com.spring.aop.JoinPointTest"></bean>
+	<bean id="loggingTools" class="com.spring.aop.LoggingTools"></bean>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.spring.contoller.UserController.*(..))" id="pointcut"/>
+											  
+		<aop:aspect ref="loggingTools" order="1">
+			<aop:before method="beforeLog" pointcut-ref="pointcut"/>
+			<aop:after method="afterLog" pointcut-ref="pointcut"/>
+			<aop:after-returning method="afterReturningLog" pointcut-ref="pointcut" returning="result"/>
+			<aop:after-throwing method="afterThrowingLog" pointcut-ref="pointcut" throwing="e"/>
+			<!-- <aop:around method="aroundLog" pointcut-ref="pointcut" /> -->
+		</aop:aspect>
+		
+		<aop:aspect ref="joinPointTest" order="2">
+			<aop:before method="beforeJoinPoint" pointcut-ref="pointcut"/>
+		</aop:aspect>
+	</aop:config>
+	
+</beans>
