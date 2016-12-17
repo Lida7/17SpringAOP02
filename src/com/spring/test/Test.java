@@ -11,6 +11,13 @@ public class Test {
 	/**
 	 * Spring AOP 使用方法(xml形式)
 	 * 
+	 * xml方式比较简单，首先在xml中配置好相关bean
+	 * 
+	 * 然后设置切点和切面即可
+	 * 
+	 * 详情参考application.xml
+	 * 
+	 * 
 	 * @param args
 	 */
 	

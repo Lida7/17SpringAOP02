@@ -17,8 +17,10 @@
 	<bean id="loggingTools" class="com.spring.aop.LoggingTools"></bean>
 	
 	<aop:config>
+		<!-- 指定切点 -->
 		<aop:pointcut expression="execution(* com.spring.contoller.UserController.*(..))" id="pointcut"/>
-											  
+			
+		<!-- 指定切面 -->								  
 		<aop:aspect ref="loggingTools" order="1">
 			<aop:before method="beforeLog" pointcut-ref="pointcut"/>
 			<aop:after method="afterLog" pointcut-ref="pointcut"/>
